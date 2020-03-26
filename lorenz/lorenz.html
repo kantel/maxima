@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<HTML>
+ <HEAD>
+  <TITLE>lorenz</TITLE>
+  <META NAME="generator" CONTENT="wxMaxima">
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    displayAlign: "left",
+    context: "MathJax",
+    TeX: {TagSide: "left"}
+  })
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML">
+</script>
+  <link rel="stylesheet" type="text/css" href="lorenz_htmlimg/lorenz.css"/>
+ </HEAD>
+ <BODY>
+
+<!-- ***************************************************** -->
+<!--          Created with wxMaxima version 19.05.7         -->
+<!-- ***************************************************** -->
+<noscript><div class="error message">    Please enable JavaScript in order to get a 2d display of the equations embedded in this web page.</div></noscript>\(      \DeclareMathOperator{\abs}{abs}
+      \newcommand{\ensuremath}[1]{\mbox{$#1$}}
+\)
+
+<!-- Title cell -->
+
+
+<P CLASS="title">
+Simulation des Lorenz-Systems
+</P>
+
+
+<!-- Text cell -->
+
+
+<P CLASS="comment">&nbsp;
+Das Lorenz-System ist ein System dreier nichtlinearer Differentialgleichungen erster Ordnung mit folgenden Zustandsgleichungen:<BR>
+</P>
+
+
+<!-- Code cell -->
+
+
+<TABLE><TR><TD>
+  <SPAN CLASS="prompt">
+(%i3)	
+  </SPAN></TD>
+  <TD><SPAN CLASS="input">
+<span class="code_variable">l1</span><span class="code_operator">:</span> <span class="code_operator">'</span><span class="code_function">diff</span>(<span class="code_variable">x</span>, <span class="code_variable">t</span>) <span class="code_operator">=</span> <span class="code_number">10</span><span class="code_operator">*</span>(<span class="code_variable">y</span> <span class="code_operator">-</span> <span class="code_variable">x</span>)<span class="code_endofline">;</span><BR>
+<span class="code_variable">l2</span><span class="code_operator">:</span> <span class="code_operator">'</span><span class="code_function">diff</span>(<span class="code_variable">y</span>, <span class="code_variable">t</span>) <span class="code_operator">=</span> <span class="code_number">28</span><span class="code_operator">*</span><span class="code_variable">x</span> <span class="code_operator">-</span> <span class="code_variable">y</span> <span class="code_operator">-</span> <span class="code_variable">x</span><span class="code_operator">*</span><span class="code_variable">z</span><span class="code_endofline">;</span><BR>
+<span class="code_variable">l3</span><span class="code_operator">:</span> <span class="code_operator">'</span><span class="code_function">diff</span>(<span class="code_variable">z</span>, <span class="code_variable">t</span>) <span class="code_operator">=</span> <span class="code_variable">x</span><span class="code_operator">*</span><span class="code_variable">y</span> <span class="code_operator">-</span> <span class="code_number">8</span><span class="code_operator">/</span>(<span class="code_number">3</span><span class="code_operator">*</span><span class="code_variable">z</span>)<span class="code_endofline">;</span>  </SPAN></TD>
+</TR></TABLE>
+\[\tag{l1}\frac{d}{d t} x=10 \left( y-x\right) \]
+\[\tag{l2}\frac{d}{d t} y=-x z-y+28 x\]
+\[\tag{l3}\frac{d}{d t} z=x y-\frac{8}{3 z}\]
+
+
+<!-- Text cell -->
+
+
+<P CLASS="comment">&nbsp;
+Dieses Gleichungssystem stellt ein stark vereinfachtes Modell für das Wettergeschehen dar, das von Edward N. Lorenz in den 1960er Jahren formuliert wurde. Das Besondere an diesem System ist, daß es chaotisch ist und eine oszillierende, aber nicht periodische Bewegung vollführt.<BR>
+</P>
+
+
+<!-- Text cell -->
+
+
+<P CLASS="comment">&nbsp;
+System dreier nichtlinearer Differentialgleichungen mit den Variablen x, y, z:<BR>
+</P>
+
+
+<!-- Code cell -->
+
+
+<TABLE><TR><TD>
+  <SPAN CLASS="prompt">
+(%i6)	
+  </SPAN></TD>
+  <TD><SPAN CLASS="input">
+<span class="code_variable">g1</span><span class="code_operator">:</span> <span class="code_number">10</span><span class="code_operator">*</span>(<span class="code_variable">y</span> <span class="code_operator">-</span> <span class="code_variable">x</span>)<span class="code_endofline">;</span><BR>
+<span class="code_variable">g2</span><span class="code_operator">:</span> <span class="code_number">28</span><span class="code_operator">*</span><span class="code_variable">x</span> <span class="code_operator">-</span> <span class="code_variable">y</span> <span class="code_operator">-</span> <span class="code_variable">x</span><span class="code_operator">*</span><span class="code_variable">z</span><span class="code_endofline">;</span><BR>
+<span class="code_variable">g3</span><span class="code_operator">:</span> <span class="code_variable">x</span><span class="code_operator">*</span><span class="code_variable">y</span> <span class="code_operator">-</span> <span class="code_number">8</span><span class="code_operator">/</span><span class="code_number">3</span><span class="code_operator">*</span><span class="code_variable">z</span><span class="code_endofline">;</span>  </SPAN></TD>
+</TR></TABLE>
+\[\tag{g1}10 \left( y-x\right) \]
+\[\tag{g2}-x z-y+28 x\]
+\[\tag{g3}x y-\frac{8 z}{3}\]
+
+
+<!-- Text cell -->
+
+
+<P CLASS="comment">&nbsp;
+Numerische Lösung der Differentialgleichung mit dem Runge-Kutta-Verfahren:<BR>
+</P>
+
+
+<!-- Code cell -->
+
+
+<TABLE><TR><TD>
+  <SPAN CLASS="prompt">
+(%i8)	
+  </SPAN></TD>
+  <TD><SPAN CLASS="input">
+<span class="code_variable">res1</span><span class="code_operator">:</span> <span class="code_function">rk</span>([<span class="code_variable">g1</span>, <span class="code_variable">g2</span>, <span class="code_variable">g3</span>], [<span class="code_variable">x</span>, <span class="code_variable">y</span>, <span class="code_variable">z</span>], [<span class="code_number">7</span>, <span class="code_number">10</span>, <span class="code_number">18</span>], [<span class="code_variable">t</span>, <span class="code_number">0</span>, <span class="code_number">25</span>, <span class="code_number">0</span><span class="code_number">.</span><span class="code_number">01</span>])<span class="code_endofline">$</span>  </SPAN></TD>
+</TR></TABLE>
+
+
+
+<!-- Text cell -->
+
+
+<P CLASS="comment">&nbsp;
+Das Ergebnis, eine geschachtelte Liste, wird in vier einzelne Listen zerlegt:<BR>
+</P>
+
+
+<!-- Code cell -->
+
+
+<TABLE><TR><TD>
+  <SPAN CLASS="prompt">
+(%i12)	
+  </SPAN></TD>
+  <TD><SPAN CLASS="input">
+<span class="code_variable">lit</span><span class="code_operator">:</span> <span class="code_function">map</span>(<span class="code_variable">first</span>, <span class="code_variable">res1</span>)<span class="code_endofline">$</span><BR>
+<span class="code_variable">lix</span><span class="code_operator">:</span> <span class="code_function">map</span>(<span class="code_variable">second</span>, <span class="code_variable">res1</span>)<span class="code_endofline">$</span><BR>
+<span class="code_variable">liy</span><span class="code_operator">:</span> <span class="code_function">map</span>(<span class="code_variable">third</span>, <span class="code_variable">res1</span>)<span class="code_endofline">$</span><BR>
+<span class="code_variable">liz</span><span class="code_operator">:</span> <span class="code_function">map</span>(<span class="code_variable">fourth</span>, <span class="code_variable">res1</span>)<span class="code_endofline">$</span>  </SPAN></TD>
+</TR></TABLE>
+
+
+
+<!-- Text cell -->
+
+
+<P CLASS="comment">&nbsp;
+Setzen einiger Graphikoptionen als Default-Werte:<BR>
+</P>
+
+
+<!-- Code cell -->
+
+
+<TABLE><TR><TD>
+  <SPAN CLASS="prompt">
+(%i13)	
+  </SPAN></TD>
+  <TD><SPAN CLASS="input">
+<span class="code_function">set_draw_defaults</span>(<span class="code_variable">point_type</span> <span class="code_operator">=</span> <span class="code_number">0</span>, <span class="code_variable">point_size</span> <span class="code_operator">=</span> <span class="code_number">0</span>,<BR>
+<span class="code_variable">points_joined</span> <span class="code_operator">=</span> true, <span class="code_variable">color</span> <span class="code_operator">=</span> <span class="code_variable">red</span>, <span class="code_variable">grid</span> <span class="code_operator">=</span> true)<span class="code_endofline">;</span>  </SPAN></TD>
+</TR></TABLE>
+\[\tag{%o13} [\mathit{point\_ type}=0,\mathit{point\_ size}=0,\mathit{points\_ joined}=\mbox{true},\mathit{color}=\mathit{red},\mathit{grid}=\mbox{true}]\]
+
+
+<!-- Text cell -->
+
+
+<P CLASS="comment">&nbsp;
+Darstellung der Variablen x (rot), y (blau) und z (grün) in Abhängigkeit von der Zeit t:<BR>
+</P>
+
+
+<!-- Code cell -->
+
+
+<TABLE><TR><TD>
+  <SPAN CLASS="prompt">
+(%i14)	
+  </SPAN></TD>
+  <TD><SPAN CLASS="input">
+<span class="code_function">wxdraw2d</span>(<span class="code_function">points</span>(<span class="code_variable">lit</span>, <span class="code_variable">lix</span>), <span class="code_variable">color</span> <span class="code_operator">=</span> <span class="code_variable">blue</span>, <span class="code_function">points</span>(<span class="code_variable">lit</span>, <span class="code_variable">liy</span>), <span class="code_variable">color</span> <span class="code_operator">=</span> <span class="code_variable">green</span>,<BR>
+<span class="code_function">points</span>(<span class="code_variable">lit</span>, <span class="code_variable">liz</span>))<span class="code_endofline">$</span>  </SPAN></TD>
+</TR></TABLE>
+\[\tag{%t14} \]
+  <img src="lorenz_htmlimg/lorenz_8.png" width="598" style="max-width:90%;" alt=" (Graphics) " ><BR/>
+
+
+
+<!-- Text cell -->
+
+
+<P CLASS="comment">&nbsp;
+Parameterdarstellung der Lösung in der xz-Ebene:<BR>
+</P>
+
+
+<!-- Code cell -->
+
+
+<TABLE><TR><TD>
+  <SPAN CLASS="prompt">
+(%i15)	
+  </SPAN></TD>
+  <TD><SPAN CLASS="input">
+<span class="code_function">wxdraw2d</span>(<span class="code_function">points</span>(<span class="code_variable">lix</span>, <span class="code_variable">liz</span>))<span class="code_endofline">$</span>  </SPAN></TD>
+</TR></TABLE>
+\[\tag{%t15} \]
+  <img src="lorenz_htmlimg/lorenz_10.png" width="598" style="max-width:90%;" alt=" (Graphics) " ><BR/>
+
+
+
+<!-- Code cell -->
+
+
+<TABLE><TR><TD>
+  <SPAN CLASS="prompt">
+ -->	
+  </SPAN></TD>
+  <TD><SPAN CLASS="input">
+  </SPAN></TD>
+</TR></TABLE>
+
+
+ <HR>
+ <SMALL> Created with <A HREF="https://wxMaxima-developers.github.io/wxmaxima/">wxMaxima</A>.</SMALL>
+ </BODY>
+</HTML>
